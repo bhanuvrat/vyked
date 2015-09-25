@@ -4,7 +4,7 @@ python:
     - "3.4"
 before_install:
     - export LD_LIBRARY_PATH="/usr/local/lib/"
-    - sudo git clone https://github.com/lloyd/yajl.git
+    - git clone https://github.com/lloyd/yajl.git
     - cd yajl && ./configure && make && make install
 
 install: "pip install -r requirements.txt"
