@@ -3,9 +3,9 @@ sudo: false
 python:
     - "3.4"
 before_install:
-    - export LD_LIBRARY_PATH="/usr/local/lib/"
+    - export LD_LIBRARY_PATH="~/.local/"
     - git clone https://github.com/lloyd/yajl.git
-    - cd yajl && ./configure && make && make install
+    - cd yajl && ./configure --prefix=$HOME/.local/ && make && make install
 
 install: "pip install -r requirements.txt"
 script: 
