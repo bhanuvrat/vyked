@@ -3,6 +3,8 @@ sudo: false
 python:
     - "3.4"
 before_install:
+    - echo $HOME
+    - export LIBRARY_PATH=~/.local/:$LIBRARY_PATH
     - export LD_LIBRARY_PATH=~/.local/:$LD_LIBRARY_PATH
     - git clone https://github.com/lloyd/yajl.git
     - cd yajl && ./configure --prefix=$HOME/.local/ && make && make install
