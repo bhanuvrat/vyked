@@ -190,5 +190,5 @@ class Host:
         Stats.service_name = host.name
         Stats.periodic_stats_logger()
         Aggregator.periodic_aggregated_stats_logger()
-        if os.getenv("RUN_PROFILER")==1:
+        if os.getenv("RUN_PROFILER"):
             ProfilerLog.periodic_stats_logger()
