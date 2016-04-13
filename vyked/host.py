@@ -11,7 +11,7 @@ from vyked.registry_client import RegistryClient
 from vyked.services import HTTPService, TCPService
 from .protocol_factory import get_vyked_protocol
 from .utils.log import setup_logging
-from vyked.utils.stats import Stats, Aggregator
+from vyked.utils.stats import Stats, Aggregator, ProfilerLog
 
 
 class Host:
@@ -190,3 +190,5 @@ class Host:
         Stats.service_name = host.name
         Stats.periodic_stats_logger()
         Aggregator.periodic_aggregated_stats_logger()
+        if os.getenv("RUN_PROFILER")==1:
+            ProfilerLog.periodic_stats_logger()

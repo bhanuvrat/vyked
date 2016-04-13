@@ -4,6 +4,32 @@ import setproctitle
 from collections import defaultdict
 import socket
 
+import objgraph
+import datetime
+import json
+from io import StringIO
+
+
+class ProfilerLog:
+    last_stats = {}
+    peak_stats = {}
+    @classmethod
+    def periodic_stats_logger(cls):
+        now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+        with open("profiler.log", 'a+') as f:
+            new_stats = objgraph.typestats(shortnames=False)
+            for obj, count in new_stats.items():
+                if count != cls.last_stats.get(obj, 0):
+                    f.write("{}\t{}\t{}\n".format(now, obj, count))
+                    cls.last_stats[obj] = count
+                if count > cls.peak_stats.get(obj, 0):
+                    cls.peak_stats[obj] = count
+
+            # json.dump(objgraph.most_common_types(limit=100), f)
+            # f.write("\n")
+
+        asyncio.get_event_loop().call_later(60, cls.periodic_stats_logger)
 
 class Stats:
     hostname = socket.gethostbyname(socket.gethostname())
